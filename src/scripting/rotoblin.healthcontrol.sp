@@ -114,6 +114,7 @@ public _HC_OnPluginEnable()
 	}
 
 	HookEvent("round_start", _HC_RoundStart_Event, EventHookMode_PostNoCopy);
+	HookEvent("player_left_start_area", _HC_PlayerLeftSafeRoom_Event, EventHookMode_PostNoCopy);
 	HookEvent("round_end", _HC_RoundEnd_Event, EventHookMode_PostNoCopy);
 	HookPublicEvent(EVENT_ONMAPEND, _HC_OnMapEnd);
 
@@ -133,6 +134,7 @@ public _HC_OnPluginDisable()
 	ResetConVar(FindConVar(CONVERT_PILLS_VS_CVAR));
 
 	UnhookEvent("round_start", _HC_RoundStart_Event, EventHookMode_PostNoCopy);
+	UnhookEvent("player_left_start_area", _HC_PlayerLeftSafeRoom_Event, EventHookMode_PostNoCopy);
 	UnhookEvent("round_end", _HC_RoundEnd_Event, EventHookMode_PostNoCopy);
 	UnhookPublicEvent(EVENT_ONMAPEND, _HC_OnMapEnd);
 	UnhookPublicEvent(EVENT_ONENTITYCREATED, _HC_OnEntityCreated);
@@ -165,6 +167,17 @@ public _HC_HealthStyle_CvarChange(Handle:convar, const String:oldValue[], const 
 {
 	DebugPrintToAllEx("Health style cvar was changed, update style var. Old value %s, new value %s", oldValue, newValue);
 	UpdateHealthStyle();
+}
+
+public _HC_PlayerLeftSafeRoom_Event(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	// Then, if we're using the hardcore setting, remove all pills from the map excluding the finale sets
+	if(g_iHealthStyle == SAFEROOM_AND_FINALE_PILLS_ONLY)
+	{				
+		// Finally: Now we either have 0 (standard) or 4 (finale) sets of pills remaining.
+		// Give the survivors the pills that we've removed from the saferoom.
+		GivePillsToSurvivors();
+	}
 }
 
 /**
@@ -330,10 +343,6 @@ static UpdateStartingHealthItems()
 			RemoveAllPills();
 		}
 		DebugPrintToAllEx("Finished removing pills.");
-		
-		// Finally: Now we either have 0 (standard) or 4 (finale) sets of pills remaining.
-		// Give the survivors the pills that we've removed from the saferoom.
-		GivePillsToSurvivors();
 	}
 }
 
