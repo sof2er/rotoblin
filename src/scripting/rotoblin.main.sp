@@ -108,7 +108,7 @@
 #include "rotoblin.pumpswap.sp"
 #include "rotoblin.limithuntingrifle.sp"
 #include "rotoblin.finalespawn.sp"
-#include "rotoblin.survivorexploitfixes.sp"
+//#include "rotoblin.survivorexploitfixes.sp"
 
 // --------------------
 //       Private
@@ -206,7 +206,7 @@ public OnPluginStartEx()
 	_ItemControl_OnPluginStart();
 	_MeleeFatigue_OnPluginStart();
 	_FinaleSpawn_OnPluginStart();
-	_SurvExploitFixes_OnPluginStart();
+	//_SurvExploitFixes_OnPluginStart();
 	
 	// Create cvar for control plugin state
 	Format(buffer, sizeof(buffer), "Sets whether %s is enabled", PLUGIN_FULLNAME);
