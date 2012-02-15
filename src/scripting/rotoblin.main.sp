@@ -107,7 +107,7 @@
 #include "rotoblin.weaponcontrol.sp"
 #include "rotoblin.pumpswap.sp"
 #include "rotoblin.limithuntingrifle.sp"
-#include "rotoblin.finalespawn.sp"
+//#include "rotoblin.finalespawn.sp" - depreciated and replaced by z_finale_spawn_safety_range
 //#include "rotoblin.survivorexploitfixes.sp"
 
 // --------------------
@@ -205,7 +205,7 @@ public OnPluginStartEx()
 	_LimitHuntingRifl_OnPluginStart();
 	_ItemControl_OnPluginStart();
 	_MeleeFatigue_OnPluginStart();
-	_FinaleSpawn_OnPluginStart();
+	//_FinaleSpawn_OnPluginStart();
 	//_SurvExploitFixes_OnPluginStart();
 	
 	// Create cvar for control plugin state
